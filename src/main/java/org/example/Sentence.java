@@ -7,12 +7,12 @@ public class Sentence {
     private final List<Object> elements = new ArrayList<>();
 
     public Sentence(String sentence) {
-        String[] words = sentence.split("\\s+");
-        for (String part : words) {
+        String[] parts = sentence.split("(?=[\\p{Punct}])|(?<=\\p{Punct})|\\s+");
+        for (String part : parts) {
             if (part.matches("\\p{Punct}")) {
                 elements.add(new PunctuationMark(part.charAt(0)));
             } else {
-                elements.add(new Word(part));
+                elements.add(new Word(part.trim()));
             }
         }
     }
@@ -25,9 +25,16 @@ public class Sentence {
     public String toString() {
         StringBuilder result = new StringBuilder();
         for (Object element : elements) {
-            result.append(element).append(" ");
+            if (element instanceof PunctuationMark) {
+                result.append(element);
+            } else {
+                if (!result.isEmpty()) {
+                    result.append(" ");
+                }
+                result.append(element);
+            }
         }
-        return result.toString().trim();
+        return result.toString();
     }
 }
     
