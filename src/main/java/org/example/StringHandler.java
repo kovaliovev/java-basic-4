@@ -9,7 +9,6 @@ public class StringHandler {
         for (Sentence sentence : inputText.getSentences()) {
             Sentence newSentence = new Sentence("");
             for (Object element : sentence.getElements()) {
-                System.out.println(element);
                 if (element instanceof Word) {
                     Word word = (Word) element;
                     if (word.length() == lengthToRemove && word.startsWithConsonant()) {
